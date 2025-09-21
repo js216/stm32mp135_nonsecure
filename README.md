@@ -4,7 +4,7 @@ This repository presents a Buildroot defconfig and board configuration files
 for a simplified boot process of the STM32MP135 evaluation board.
 
 There are two simplification: remove U-Boot, and remove OP-TEE. Refer the the
-instructions below to get started, or consult the articles:
+instructions below to get started, or consult the articles for more information:
 
 - [STM32MP135 Without U-Boot (TF-A Falcon Mode)](https://embd.cc/stm32mp135-without-u-boot)
 - OP-TEE: TBD
@@ -15,7 +15,7 @@ Clone the Buildroot repository. To make the procedure reproducible, let's start
 from a fixed commit (latest at the time of this writing):
 
 ```
-$ git clone https://gitlab.com/buildroot.org/buildroot.git --depth=1
+$ git clone https://gitlab.com/buildroot.org/buildroot.git
 $ cd buildroot
 $ git checkout 5b6b80bfc5237ab4f4e35c081fdac1376efdd396
 ```
@@ -28,8 +28,8 @@ $ git clone git@github.com:js216/stm32mp135_simple.git
 $ cd buildroot # NOT stm32mp135_simple
 $ git apply ../stm32mp135_simple/patches/add_falcon.patch
 $ git apply ../stm32mp135_simple/patches/increase_fip.patch
-$ cp ../configs/stm32mp135_simple/stm32mp135f_dk_falcon_defconfig configs
-$ cp -r ../board/stm32mp135_simple/stm32mp135f-dk-falcon board/stmicroelectronics
+$ cp ../stm32mp135_simple/configs/stm32mp135f_dk_falcon_defconfig configs
+$ cp -r ../stm32mp135_simple/board/stm32mp135f-dk-falcon board/stmicroelectronics
 ```
 
 Build as usual, but using the new defconfig:
@@ -44,4 +44,23 @@ prompt exactly as in the default configuration---but without involving U-Boot
 
 ### Non-Secure Boot Process (No OP-TEE)
 
-Work in progress!
+*WARNING: Work in progress!*
+
+Start by cloning Buildroot as above. However, this time we check out a different
+sequence of patches and board files:
+
+```
+$ git clone git@github.com:js216/stm32mp135_simple.git
+$ cd buildroot # NOT stm32mp135_simple
+$ git apply ../stm32mp135_simple/patches/add_nonsecure.patch
+$ git apply ../stm32mp135_simple/patches/increase_fip.patch
+$ cp ../configs/stm32mp135_simple/stm32mp135f_dk_nonsecure_defconfig configs
+$ cp -r ../board/stm32mp135_simple/stm32mp135f-dk-nonsecure board/stmicroelectronics
+```
+
+Now build:
+
+```
+$ make stm32mp135f_dk_nonsecure_defconfig
+$ make
+```
