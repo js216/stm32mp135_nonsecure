@@ -17,7 +17,7 @@ from a fixed commit (latest at the time of this writing):
 ```
 $ git clone https://gitlab.com/buildroot.org/buildroot.git
 $ cd buildroot
-$ git checkout 5b6b80bfc5237ab4f4e35c081fdac1376efdd396
+$ git checkout 5d2abdc66ca687c926e1c4546c12aca7f7d72ca4
 ```
 
 Obtain this repository with the patches we need. Copy the defconfig and the
@@ -50,12 +50,17 @@ Start by cloning Buildroot as above. However, this time we check out a different
 sequence of patches and board files:
 
 ```
+$ git clone https://gitlab.com/buildroot.org/buildroot.git
+$ cd buildroot
+$ git checkout 3645e3b781be5cedbb0e667caa70455444ce4552
+
 $ git clone git@github.com:js216/stm32mp135_simple.git
 $ cd buildroot # NOT stm32mp135_simple
-$ git apply ../stm32mp135_simple/patches/add_nonsecure.patch
-$ git apply ../stm32mp135_simple/patches/increase_fip.patch
-$ cp ../configs/stm32mp135_simple/stm32mp135f_dk_nonsecure_defconfig configs
-$ cp -r ../board/stm32mp135_simple/stm32mp135f-dk-nonsecure board/stmicroelectronics
+
+$ git apply ../stm32mp135_simple/patches/add_falcon.patch
+
+$ cp ../stm32mp135_simple/configs/stm32mp135f_dk_nonsecure_defconfig configs
+$ cp -r ../stm32mp135_simple/board/stm32mp135f-dk-nonsecure board/stmicroelectronics
 ```
 
 Now build:
